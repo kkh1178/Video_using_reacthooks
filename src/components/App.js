@@ -20,7 +20,7 @@ const App = () => {
 				q: term,
 				part: "snippet",
 				maxResults: 10,
-				key: ""
+				key: ''
 			},
 		});
 
@@ -29,9 +29,6 @@ const App = () => {
 		
 	};
 
-	const onVideoSelect = (video) => {
-		setSelectedVideo(video);
-	};
 
 	return (
 		<div className="ui container" style={{ marginTop: "10 px" }}>
@@ -43,7 +40,8 @@ const App = () => {
 					</div>
 					<div className="five wide column">
 						<VideoList
-							onVideoSelect={onVideoSelect}
+							// Equivalent to an inline function (video) => setSeletectedVideo(video)
+							onVideoSelect={setSelectedVideo}
 							videos={videos}
 						/>
 					</div>
