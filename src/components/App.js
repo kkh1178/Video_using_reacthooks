@@ -1,38 +1,24 @@
 import React, {useState, useEffect} from "react";
 import SearchBar from "./SearchBar";
-import youtube from "../apis/youtube";
 import VideoList from "./VideoList";
 import VideoDetail from "./VideoDetail";
+import useVideos from '../hooks/useVideos';
 
 const App = () => {
-	const [videos, setVideos] = useState([]);
+	
 	const [selectedVideo, setSelectedVideo] = useState(null);
+	const[videos, search] = useVideos('blueberry pancakes');
 
-	// Roughly equivalent to the componentDidMount in the class components
+	// Automatically selects the first video in the list
 	useEffect(() => {
-		onTermSubmit("pancakes");
-	}, []);
-
-	const onTermSubmit = async (term) => {
-		// console.log(term);
-		const response = await youtube.get("/search", {
-			params: {
-				q: term,
-				part: "snippet",
-				maxResults: 10,
-				key: ''
-			},
-		});
-
-		setVideos(response.data.items);
-		setSelectedVideo(response.data.items[0]);
-		
-	};
+		setSelectedVideo(videos[0]);
+	})
+	
 
 
 	return (
 		<div className="ui container" style={{ marginTop: "10 px" }}>
-			<SearchBar onFormSubmit={onTermSubmit} />
+			<SearchBar onFormSubmit={search} />
 			<div className="ui grid">
 				<div className="ui row">
 					<div className="eleven wide column">
